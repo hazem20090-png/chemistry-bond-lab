@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>لوحة المعلم | مختبر الكيمياء</title>
+  <link rel="stylesheet" href="teacher.css?v=1">
+</head>
+<body>
+  <div class="orb orbA"></div><div class="orb orbB"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="atom">⚛</span><div><small>NEIMA CHEMISTRY LAB</small><h1 data-ar="لوحة تحكم المعلم" data-en="Teacher Control Center">لوحة تحكم المعلم</h1></div></div>
+      <div class="actions">
+        <button id="langBtn" class="ghost">English</button>
+        <button id="refreshBtn" class="ghost hidden">↻ <span data-ar="تحديث" data-en="Refresh">تحديث</span></button>
+        <button id="logoutBtn" class="danger hidden" data-ar="خروج" data-en="Sign out">خروج</button>
+      </div>
+    </header>
+
+    <section id="loginView" class="loginWrap">
+      <div class="loginCard">
+        <div class="shield">🔐</div>
+        <span class="eyebrow">PRIVATE TEACHER ACCESS</span>
+        <h2 data-ar="دخول المعلم" data-en="Teacher sign in">دخول المعلم</h2>
+        <p data-ar="هذه الصفحة منفصلة ولا تظهر للطلاب. أدخل رمز المعلم لإدارة الدروس ومتابعة العمل." data-en="This page is separate and hidden from students. Enter the teacher code to manage lessons and track work.">هذه الصفحة منفصلة ولا تظهر للطلاب. أدخل رمز المعلم لإدارة الدروس ومتابعة العمل.</p>
+        <label for="teacherCode" data-ar="رمز المعلم" data-en="Teacher code">رمز المعلم</label>
+        <div class="codeRow"><input id="teacherCode" type="password" autocomplete="current-password" placeholder="••••••••"><button id="showCode" aria-label="Show code">👁</button></div>
+        <button id="loginBtn" class="primary wide" data-ar="فتح لوحة التحكم" data-en="Open dashboard">فتح لوحة التحكم</button>
+        <div id="loginMessage" class="message" role="status"></div>
+      </div>
+    </section>
+
+    <section id="dashboard" class="dashboard hidden">
+      <div class="welcome">
+        <div><span class="eyebrow" data-ar="متابعة مباشرة" data-en="LIVE OVERVIEW">متابعة مباشرة</span><h2 data-ar="مرحبًا أستاذ حازم" data-en="Welcome, Mr Hazem">مرحبًا أستاذ حازم</h2><p data-ar="تحكم في الدروس وشاهد مشاركة الطلاب من مكان واحد." data-en="Control lesson access and monitor student participation in one place.">تحكم في الدروس وشاهد مشاركة الطلاب من مكان واحد.</p></div>
+        <div id="syncState" class="sync">● <span data-ar="متصل بقاعدة البيانات" data-en="Database connected">متصل بقاعدة البيانات</span></div>
+      </div>
+
+      <div class="stats">
+        <article><span class="statIcon cyan">👥</span><div><b id="studentCount">—</b><small data-ar="إجمالي الطلاب" data-en="Total students">إجمالي الطلاب</small></div></article>
+        <article><span class="statIcon violet">✓</span><div><b id="activeCount">—</b><small data-ar="دخلوا المنصة" data-en="Joined platform">دخلوا المنصة</small></div></article>
+        <article><span class="statIcon amber">🔓</span><div><b id="openCount">—</b><small data-ar="دروس مفتوحة" data-en="Open lessons">دروس مفتوحة</small></div></article>
+        <article><span class="statIcon green">◈</span><div><b id="progressCount">—</b><small data-ar="سجلات التقدم" data-en="Progress records">سجلات التقدم</small></div></article>
+      </div>
+
+      <nav class="tabs">
+        <button class="tab active" data-view="lessons" data-ar="إدارة الدروس" data-en="Lesson access">إدارة الدروس</button>
+        <button class="tab" data-view="students" data-ar="الطلاب والنتائج" data-en="Students & results">الطلاب والنتائج</button>
+      </nav>
+
+      <section id="lessonsView" class="panel">
+        <div class="panelHead"><div><h3 data-ar="فتح وإغلاق الدروس" data-en="Open and close lessons">فتح وإغلاق الدروس</h3><p data-ar="يظهر التغيير فورًا للطالب عند تحديث الصفحة." data-en="Changes appear for students as soon as they refresh.">يظهر التغيير فورًا للطالب عند تحديث الصفحة.</p></div></div>
+        <div id="lessonGroups"></div>
+      </section>
+
+      <section id="studentsView" class="panel hidden">
+        <div class="panelHead">
+          <div><h3 data-ar="متابعة الطلاب" data-en="Student tracking">متابعة الطلاب</h3><p data-ar="الأسماء، الصف، آخر دخول، التقدم والنتائج." data-en="Names, class, last visit, progress, and results.">الأسماء، الصف، آخر دخول، التقدم والنتائج.</p></div>
+          <button id="exportBtn" class="ghost" data-ar="تصدير CSV" data-en="Export CSV">تصدير CSV</button>
+        </div>
+        <div class="filters"><input id="studentSearch" type="search" placeholder="ابحث بالاسم..."><select id="classFilter"><option value="">كل الصفوف</option></select></div>
+        <div class="tableWrap"><table><thead><tr><th data-ar="الطالب" data-en="Student">الطالب</th><th data-ar="الصف" data-en="Class">الصف</th><th data-ar="آخر دخول" data-en="Last visit">آخر دخول</th><th data-ar="الدروس" data-en="Lessons">الدروس</th><th data-ar="آخر نتيجة" data-en="Latest score">آخر نتيجة</th></tr></thead><tbody id="studentRows"></tbody></table></div>
+        <div id="emptyState" class="empty hidden" data-ar="لا توجد نتائج مطابقة." data-en="No matching students.">لا توجد نتائج مطابقة.</div>
+      </section>
+    </section>
+  </main>
+  <div id="toast" class="toast"></div>
+  <script type="module" src="teacher.js?v=1"></script>
+</body>
+</html>
