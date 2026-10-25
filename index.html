@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#06111f">
-  <title>مختبر الروابط ثلاثي الأبعاد</title>
-  <link rel="stylesheet" href="styles.css?v=orbit-rings-v2">
+  <title>منصة مختبر الكيمياء التفاعلي</title>
+  <link rel="stylesheet" href="styles.css?v=platform-1">
   <script type="importmap">
   {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}
   </script>
@@ -15,15 +15,19 @@
   <header class="top">
     <div class="brand">
       <div class="brandMark" aria-hidden="true">⚛</div>
-      <div><h1 id="brandTitle">مختبر الروابط ثلاثي الأبعاد</h1><p id="brandSub">ابنِ الذرة، حرّك الجسيمات، واكتشف الرابطة بنفسك</p></div>
+      <div><h1 id="brandTitle">منصة مختبر الكيمياء التفاعلي</h1><p id="brandSub">تجارب ومحاكاة للصفوف 10–12</p></div>
     </div>
     <div class="topActions">
+      <button id="platformBtn" class="btn primary">كل الدروس</button>
+      <button id="teacherBtn" class="btn">تحكم المعلم</button>
       <button id="langBtn" class="btn">English</button>
       <button id="resetBtn" class="btn danger">إعادة المختبر</button>
     </div>
   </header>
 
-  <nav class="tabs" aria-label="المختبرات">
+  <section id="catalog" class="catalog"></section>
+
+  <nav id="tabsNav" class="tabs hidden" aria-label="المختبرات">
     <button class="tab active" data-lab="atom">ابنِ ذرة</button>
     <button class="tab" data-lab="ionic">مختبر أيوني</button>
     <button class="tab" data-lab="covalent">مختبر تساهمي</button>
@@ -31,14 +35,14 @@
     <button class="tab" data-lab="challenge">التحدي</button>
   </nav>
 
-  <section class="lab">
+  <section id="labSection" class="lab hidden">
     <div class="viewerCard">
       <div class="viewerTop">
         <div class="viewerTitle"><span class="liveDot"></span><span id="sceneTitle">O — الأكسجين</span></div>
         <div id="sceneHint" class="viewerHint">اسحب للتدوير • استخدم العجلة للتقريب</div>
       </div>
       <div id="scene">
-        <div id="modelNote" class="sceneBadge">نموذج تعليمي للمدارات — ليس مسارًا حقيقيًا للإلكترون</div>
+        <div id="modelNote" class="sceneBadge">مستويات طاقة تعليمية ثلاثية الأبعاد</div>
         <div class="legend" aria-label="مفتاح الجسيمات">
           <span><i class="protonDot"></i>p⁺ بروتون</span>
           <span><i class="neutronDot"></i>n نيوترون</span>
@@ -52,9 +56,37 @@
     </aside>
   </section>
 
-  <p class="footerNote">مختبر بصري تعليمي ثنائي اللغة. اسحب النموذج ثلاثي الأبعاد ودوّره وقرّبه، ثم نفّذ التجارب بنفسك.</p>
+  <p class="footerNote">المحتوى مرتب من ملفات المنهج الرسمية 2026–2027. نموذج الحلقات يوضح مستويات الطاقة، أما الإلكترون الحقيقي فيوصف بسحابة احتمالية.</p>
 </main>
+
+<div id="teacherPanel" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modalCard teacherCard">
+    <button id="closeTeacher" class="iconClose" aria-label="إغلاق">×</button>
+    <h2 id="teacherTitle">لوحة فتح وإغلاق الدروس</h2>
+    <p>اختر الدروس ثم انسخ رابط الطلاب. الرابط يفتح فقط الدروس التي حددتها.</p>
+    <div id="teacherLessons" class="teacherLessons"></div>
+    <div class="teacherActions">
+      <button id="saveAccessBtn" class="btn">حفظ على هذا الجهاز</button>
+      <button id="shareBtn" class="btn primary">نسخ رابط الطلاب</button>
+    </div>
+    <input id="shareLink" class="shareLink hidden" readonly>
+    <p id="teacherMessage" class="teacherMessage"></p>
+  </div>
+</div>
+
+<div id="lessonModal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modalCard">
+    <button id="closeLesson" class="iconClose" aria-label="إغلاق">×</button>
+    <span id="lessonModalUnit" class="eyebrow"></span>
+    <h2 id="lessonModalTitle"></h2>
+    <p id="lessonModalSummary"></p>
+    <h3>Learning targets</h3>
+    <ul id="lessonObjectives" class="objectiveList"></ul>
+    <div id="lessonStatus" class="status warn"></div>
+  </div>
+</div>
+
 <noscript>يحتاج هذا المختبر إلى تشغيل JavaScript.</noscript>
-<script type="module" src="app.js?v=orbit-rings-v2"></script>
+<script type="module" src="app.js?v=platform-1"></script>
 </body>
 </html>
