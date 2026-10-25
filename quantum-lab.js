@@ -71,9 +71,14 @@ function makeOverlay(){
  overlay.querySelector('#qReset').onclick=resetLab;
  init3D();renderText();resetLab();
 }
+function quantumFallbackRenderer(){
+ const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');let w=760,h=520;
+ function draw(){ctx.clearRect(0,0,w,h);const cx=w/2,cy=h/2,t=performance.now()*.001;ctx.save();ctx.translate(cx,cy);for(let n=1;n<=6;n++){ctx.save();ctx.rotate(n*.22+t*.018*(n%2?1:-1));ctx.scale(1,.52);ctx.beginPath();ctx.arc(0,0,42+n*29,0,Math.PI*2);ctx.strokeStyle=n===currentN?'rgba(72,230,255,.95)':'rgba(72,180,255,.22)';ctx.lineWidth=n===currentN?3:1.5;ctx.stroke();ctx.restore()}const ng=ctx.createRadialGradient(0,0,2,0,0,32);ng.addColorStop(0,'#fff');ng.addColorStop(.2,'#ff496d');ng.addColorStop(1,'rgba(255,30,80,0)');ctx.fillStyle=ng;ctx.beginPath();ctx.arc(0,0,34,0,Math.PI*2);ctx.fill();const r=42+currentN*29,a=t*.9,x=Math.cos(a)*r,y=Math.sin(a)*r*.52;const eg=ctx.createRadialGradient(x,y,1,x,y,25);eg.addColorStop(0,'#fff');eg.addColorStop(.2,'#fff36c');eg.addColorStop(1,'rgba(55,224,255,0)');ctx.fillStyle=eg;ctx.beginPath();ctx.arc(x,y,27,0,Math.PI*2);ctx.fill();if(photonGroup?.visible){ctx.strokeStyle='#ffe45b';ctx.lineWidth=4;ctx.beginPath();for(let px=0;px<150;px++){const py=Math.sin(px*.18+t*8)*10;if(px===0)ctx.moveTo(px+35,py-100);else ctx.lineTo(px+35,py-100)}ctx.stroke()}ctx.restore()}
+ return{domElement:canvas,shadowMap:{enabled:false},setPixelRatio(){},setSize(nw,nh){w=Math.max(1,nw);h=Math.max(1,nh);canvas.width=w;canvas.height=h;draw()},render(){draw()}};
+}
 function init3D(){
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(42,1,.1,100);camera.position.set(0,3.4,13);
- renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;host.prepend(renderer.domElement);
+ try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){renderer=quantumFallbackRenderer()}renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;host.prepend(renderer.domElement);
  orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;orbit.enablePan=false;orbit.minDistance=7;orbit.maxDistance=19;
  scene.add(new THREE.AmbientLight(0x6ba7dd,1.6));const key=new THREE.DirectionalLight(0xffffff,3);key.position.set(5,7,8);scene.add(key);const cyan=new THREE.PointLight(0x20ddff,35,30);cyan.position.set(-7,3,5);scene.add(cyan);
  atomGroup=new THREE.Group();scene.add(atomGroup);
