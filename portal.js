@@ -111,6 +111,7 @@ async function login(){
     button.disabled=false;
   }
 }
+window.addEventListener('chem:quiz-complete',event=>{const d=event.detail||{};if(d.lessonId)rpc('record_progress',{p_token:localStorage.getItem(TOKEN_KEY),p_lesson_id:d.lessonId,p_status:'completed',p_score:Number(d.score)||0,p_max_score:Number(d.maxScore)||3,p_time_spent_seconds:0}).catch(()=>{});});
 document.getElementById('eseLoginBtn').onclick=login;
 document.getElementById('eseLogin').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 resume();
