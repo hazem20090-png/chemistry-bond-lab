@@ -60,12 +60,10 @@ function activatePortal(data,token){
   overlay.remove();
   app?.classList.remove('portalWaiting');
   const grade=wantedGrade(data.student.classCode);
+  document.body.dataset.studentGrade=String(grade);
   requestAnimationFrame(()=>{
-    document.querySelectorAll('.gradeBtn').forEach(btn=>{
-      const own=Number(btn.dataset.grade)===grade;
-      btn.hidden=!own;
-      if(own)btn.click();
-    });
+    const own=document.querySelector('.gradeBtn[data-grade="'+grade+'"]');
+    if(own)own.click();
   });
   const chip=document.createElement('div');
   chip.className='studentChip';
