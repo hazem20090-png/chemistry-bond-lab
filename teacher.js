@@ -26,6 +26,7 @@ function showLogin(msg=''){
 }
 function showDashboard(){
   $('loginView').classList.add('hidden');$('dashboard').classList.remove('hidden');$('refreshBtn').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');
+  renderLessons();populateClasses();renderStudents();
 }
 async function login(){
   const code=$('teacherCode').value;
