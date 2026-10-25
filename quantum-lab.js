@@ -6,7 +6,7 @@ const HC_EV_NM=1239.841984;
 let lang=document.documentElement.lang==='en'?'en':'ar';
 let overlay,host,renderer,scene,camera,orbit,atomGroup,electronCloud,photonGroup;
 let rings=[],cloudSpecks=[],photonParts=[],currentN=1,targetN=4,lowerN=2;
-let running=false,last=performance.now(),transition=null,mission={select:false,excite:false,emit:false,answer:false};
+let running=false,last=performance.now(),transition=null,lastTransitionData=null,mission={select:false,excite:false,emit:false,answer:false};
 
 const T={
  ar:{
@@ -65,7 +65,7 @@ function makeOverlay(){
  document.body.appendChild(overlay);host=overlay.querySelector('#qScene');
  overlay.querySelector('#qClose').onclick=closeLab;
  overlay.querySelector('#qLang').onclick=()=>{lang=lang==='ar'?'en':'ar';renderText()};
- overlay.querySelector('#qUpper').oninput=e=>{targetN=Number(e.target.value);mission.select=true;if(lowerN>=targetN)lowerN=targetN-1;renderControls();updateMission()};
+ overlay.querySelector('#qUpper').oninput=e=>{targetN=Number(e.target.value);lastTransitionData=null;mission.select=true;if(lowerN>=targetN)lowerN=targetN-1;renderControls();updateMission()};
  overlay.querySelector('#qExcite').onclick=excite;
  overlay.querySelector('#qEmit').onclick=emitPhoton;
  overlay.querySelector('#qReset').onclick=resetLab;
@@ -114,16 +114,16 @@ function renderControls(){
  overlay.querySelector('#qLevelDots').innerHTML=[1,2,3,4,5,6].map(n=>`<span class="${n===targetN?'active':''}">n=${n}<small>${energy(n).toFixed(2)} eV</small></span>`).join('');
  const lowers=[];for(let n=1;n<targetN;n++)lowers.push(n);if(!lowers.includes(lowerN))lowerN=Math.max(1,targetN-1);
  overlay.querySelector('#qLowerButtons').innerHTML=lowers.map(n=>`<button data-lower="${n}" class="${n===lowerN?'active':''}">n = ${n}</button>`).join('');
- overlay.querySelectorAll('[data-lower]').forEach(b=>b.onclick=()=>{lowerN=Number(b.dataset.lower);renderControls()});
+ overlay.querySelectorAll('[data-lower]').forEach(b=>b.onclick=()=>{lowerN=Number(b.dataset.lower);lastTransitionData=null;renderControls()});
  overlay.querySelector('#qExcite').disabled=!!transition||currentN!==1;overlay.querySelector('#qEmit').disabled=!!transition||currentN===1;
- if(currentN>1){const nm=wavelength(currentN,lowerN),reg=region(nm);overlay.querySelector('#qDelta').textContent=Math.abs(energy(currentN)-energy(lowerN)).toFixed(2)+' eV';overlay.querySelector('#qWave').textContent=nm.toFixed(1)+' nm';overlay.querySelector('#qRegion').textContent=tx(reg);overlay.querySelector('#qRegion').style.color='#'+spectralColor(nm).toString(16).padStart(6,'0')}else{overlay.querySelector('#qDelta').textContent='—';overlay.querySelector('#qWave').textContent='—';overlay.querySelector('#qRegion').textContent='—';overlay.querySelector('#qRegion').style.color=''}
+ const metric=lastTransitionData||(currentN>1?{delta:Math.abs(energy(currentN)-energy(lowerN)),nm:wavelength(currentN,lowerN),reg:region(wavelength(currentN,lowerN))}:null);if(metric){overlay.querySelector('#qDelta').textContent=metric.delta.toFixed(2)+' eV';overlay.querySelector('#qWave').textContent=metric.nm.toFixed(1)+' nm';overlay.querySelector('#qRegion').textContent=tx(metric.reg);overlay.querySelector('#qRegion').style.color='#'+spectralColor(metric.nm).toString(16).padStart(6,'0')}else{overlay.querySelector('#qDelta').textContent='—';overlay.querySelector('#qWave').textContent='—';overlay.querySelector('#qRegion').textContent='—';overlay.querySelector('#qRegion').style.color=''}
 }
-function excite(){if(currentN!==1||transition)return;const destination=targetN;transition={from:1,to:destination,t:0,duration:1.05};mission.excite=true;overlay.querySelector('#qFeedback').textContent=tx('absorbed');overlay.querySelector('#qFeedback').className='qFeedback good';updateMission();setTimeout(()=>{if(transition&&transition.to===destination){currentN=destination;transition=null;renderControls()}},1150)}
-function emitPhoton(){if(currentN===1||transition)return;const from=currentN,to=lowerN,nm=wavelength(from,to),color=spectralColor(nm);photonParts.forEach(p=>p.material.color.setHex(color));photonGroup.position.set(0,1.4,0);photonGroup.visible=true;transition={from,to,t:0,duration:.85};mission.emit=true;overlay.querySelector('#qFeedback').textContent=tx('emitted')+' '+nm.toFixed(1)+' nm';overlay.querySelector('#qFeedback').className='qFeedback photon';updateMission();setTimeout(()=>{if(transition&&transition.from===from&&transition.to===to){currentN=to;transition=null;renderControls()}},950)}
+function excite(){if(currentN!==1||transition)return;lastTransitionData=null;const destination=targetN;transition={from:1,to:destination,t:0,duration:1.05};mission.excite=true;overlay.querySelector('#qFeedback').textContent=tx('absorbed');overlay.querySelector('#qFeedback').className='qFeedback good';updateMission();setTimeout(()=>{if(transition&&transition.to===destination){currentN=destination;transition=null;renderControls()}},1150)}
+function emitPhoton(){if(currentN===1||transition)return;const from=currentN,to=lowerN,nm=wavelength(from,to),color=spectralColor(nm);lastTransitionData={delta:Math.abs(energy(from)-energy(to)),nm,reg:region(nm)};photonParts.forEach(p=>p.material.color.setHex(color));photonGroup.position.set(0,1.4,0);photonGroup.visible=true;transition={from,to,t:0,duration:.85};mission.emit=true;overlay.querySelector('#qFeedback').textContent=tx('emitted')+' '+nm.toFixed(1)+' nm';overlay.querySelector('#qFeedback').className='qFeedback photon';updateMission();setTimeout(()=>{if(transition&&transition.from===from&&transition.to===to){currentN=to;transition=null;renderControls()}},950)}
 function updateMission(){overlay.querySelector('#qMissionSteps').innerHTML=tx('steps').map((s,i)=>`<div class="${Object.values(mission)[i]?'done':''}"><i>✓</i><span>${esc(s)}</span></div>`).join('')}
 function renderQuiz(){overlay.querySelector('#qAnswers').innerHTML=tx('answers').map((a,i)=>`<button data-qanswer="${i}">${esc(a)}</button>`).join('');overlay.querySelectorAll('[data-qanswer]').forEach(b=>b.onclick=()=>answerQuestion(Number(b.dataset.qanswer)))}
 function answerQuestion(i){const f=overlay.querySelector('#qQuizFeedback');if(i===1){mission.answer=true;f.textContent=tx('correct')+' '+tx('score');f.className='good';overlay.querySelectorAll('[data-qanswer]').forEach((b,j)=>{b.disabled=true;if(j===1)b.classList.add('correct')});window.dispatchEvent(new CustomEvent('chem:quiz-complete',{detail:{lessonId:LESSON_ID,score:1,maxScore:1}}));updateMission()}else{f.textContent=tx('wrong');f.className='bad'}}
-function resetLab(){currentN=1;targetN=4;lowerN=2;transition=null;mission={select:false,excite:false,emit:false,answer:false};photonGroup.visible=false;overlay.querySelector('#qUpper').value=4;overlay.querySelector('#qFeedback').textContent=tx('waiting');overlay.querySelector('#qFeedback').className='qFeedback';overlay.querySelector('#qQuizFeedback').textContent='';renderQuiz();renderControls();updateMission()}
+function resetLab(){currentN=1;targetN=4;lowerN=2;transition=null;lastTransitionData=null;mission={select:false,excite:false,emit:false,answer:false};photonGroup.visible=false;overlay.querySelector('#qUpper').value=4;overlay.querySelector('#qFeedback').textContent=tx('waiting');overlay.querySelector('#qFeedback').className='qFeedback';overlay.querySelector('#qQuizFeedback').textContent='';renderQuiz();renderControls();updateMission()}
 function openLab(){if(!overlay)makeOverlay();lang=document.documentElement.lang==='en'?'en':'ar';renderText();overlay.classList.remove('hidden');document.body.classList.add('qNoScroll');running=true;resize()}
 function closeLab(){overlay.classList.add('hidden');document.body.classList.remove('qNoScroll');running=false}
 
