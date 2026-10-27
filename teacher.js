@@ -5,8 +5,14 @@ const TOKEN_KEY='chem-teacher-session';
 let lang='ar',token=localStorage.getItem(TOKEN_KEY)||'',dashboardData={students:[],lessons:[]};
 
 const $=id=>document.getElementById(id);
+const USE_AZURE_PROXY=location.hostname.endsWith('.azurestaticapps.net');
 async function rpc(name,payload){
-  const response=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},body:JSON.stringify(payload)});
+  const response=await fetch(USE_AZURE_PROXY?'/api/rpc/'+encodeURIComponent(name):SUPABASE_URL+'/rest/v1/rpc/'+name,{
+    method:'POST',
+    headers:USE_AZURE_PROXY?{'Content-Type':'application/json'}:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
+    body:JSON.stringify(payload),
+    cache:'no-store'
+  });
   if(!response.ok)throw new Error('network');
   return response.json();
 }
