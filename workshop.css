@@ -1,0 +1,10 @@
+.workshopGate .loginCard{border-color:rgba(71,230,161,.35);box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 45px rgba(71,230,161,.1)}
+.workshopGate .loginAtom{color:#47e6a1;box-shadow:inset 0 0 28px rgba(71,230,161,.18),0 0 30px rgba(71,230,161,.16)}
+.workshopGate .loginEyebrow{color:#73f0b9}
+.workshopGate button{background:linear-gradient(135deg,#27c98a,#24c5dc)}
+.workshopChip small{color:#73f0b9!important}
+.workshopReward{display:inline-block;margin-top:5px;padding:3px 8px;border-radius:999px;background:rgba(255,211,74,.12);color:#ffe275;font-style:normal;font-weight:900;font-size:12px}
+.workshopPage .catalog{display:none!important}
+.workshopPage #platformBtn{display:none}
+.workshopPage #tabsNav .tab:not([data-lab="covalent"]):not([data-lab="challenge"]){display:none}
+@media(max-width:720px){.workshopChip{width:100%;justify-content:center}.workshopPage .topActions{justify-content:center}}

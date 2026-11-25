@@ -1,0 +1,20 @@
+.stats{grid-template-columns:repeat(5,1fr)}
+.workshopSummary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.workshopSummary span{padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(4,16,28,.65)}
+.workshopSummary b,.workshopSummary small{display:block}
+.workshopSummary b{font-size:27px;color:var(--cyan)}
+.workshopSummary small{color:var(--muted);margin-top:3px}
+.rosterEditor{padding:18px;border:1px solid var(--line);border-radius:17px;background:rgba(4,16,28,.58);margin-bottom:18px}
+.rosterEditor label{display:block;font-weight:800;margin-bottom:9px}
+.rosterEditor textarea{width:100%;resize:vertical;min-height:130px;border:1px solid var(--line);background:#071421;color:var(--text);border-radius:13px;padding:13px 14px;outline:none;font:inherit;line-height:1.7}
+.rosterEditor textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(61,228,255,.09)}
+.rosterActions{display:flex;align-items:center;gap:14px;margin-top:10px}
+.rosterActions small{color:var(--muted)}
+.workshopTable{min-width:760px}
+.attendanceStatus{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px}
+.attendanceStatus.joined{color:var(--green);background:rgba(71,230,161,.1)}
+.attendanceStatus.missing{color:var(--red);background:rgba(255,107,130,.1)}
+.attendanceStatus.guest{color:var(--amber);background:rgba(255,189,85,.1)}
+.workshopTeacherRow.joined{cursor:pointer}.workshopTeacherRow.joined:hover{background:rgba(71,230,161,.07)}.workshopTeacherRow.joined td:first-child strong{text-decoration:underline;text-decoration-color:rgba(61,228,255,.45);text-underline-offset:4px}.workshopRewardAction{display:flex;justify-content:flex-end;margin-top:15px}.workshopRewardAction .awardBtn{font-size:15px;padding:12px 18px}
+@media(max-width:980px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.workshopSummary{grid-template-columns:1fr}.rosterActions{align-items:flex-start;flex-direction:column}}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#06111f">
+  <title>تجربة المعلمين | الرابطة التساهمية</title>
+  <link rel="stylesheet" href="styles.css?v=platform-1">
+  <link rel="stylesheet" href="portal.css?v=2">
+  <link rel="stylesheet" href="portal-v8.css?v=1">
+  <link rel="stylesheet" href="quantum-lab.css?v=2">
+  <link rel="stylesheet" href="workshop.css?v=1">
+  <script type="importmap">
+  {"imports":{"three":"./vendor/three.module.min.js","three/addons/controls/OrbitControls.js":"./vendor/OrbitControls.js"}}
+  </script>
+</head>
+<body class="workshopPage">
+<main class="app portalWaiting">
+  <header class="top">
+    <div class="brand">
+      <div class="brandMark" aria-hidden="true">⚛</div>
+      <div><h1 id="brandTitle">تجربة المعلمين التفاعلية</h1><p id="brandSub">الرابطة التساهمية — الصف العاشر المتقدم</p></div>
+    </div>
+    <div class="topActions">
+      <button id="platformBtn" class="btn primary">الرابطة التساهمية</button>
+      <button id="teacherBtn" class="btn">تحكم المعلم</button>
+      <button id="langBtn" class="btn">English</button>
+      <button id="resetBtn" class="btn danger">إعادة المختبر</button>
+    </div>
+  </header>
+  <section id="catalog" class="catalog"></section>
+  <nav id="tabsNav" class="tabs hidden" aria-label="أنشطة الرابطة التساهمية">
+    <button class="tab" data-lab="atom">ابنِ ذرة</button>
+    <button class="tab" data-lab="ionic">مختبر أيوني</button>
+    <button class="tab active" data-lab="covalent">مختبر تساهمي</button>
+    <button class="tab" data-lab="metallic">بحر الإلكترونات</button>
+    <button class="tab" data-lab="properties">مختبر الخصائص</button>
+    <button class="tab" data-lab="challenge">التحدي الختامي</button>
+  </nav>
+  <section id="labSection" class="lab hidden">
+    <div class="viewerCard">
+      <div class="viewerTop"><div class="viewerTitle"><span class="liveDot"></span><span id="sceneTitle">H₂ — رابطة أحادية</span></div><div id="sceneHint" class="viewerHint">اسحب للتدوير • استخدم العجلة للتقريب</div></div>
+      <div id="scene"><div id="modelNote" class="sceneBadge">السحب الإلكترونية تمثل توزيعًا احتماليًا</div><div class="legend" aria-label="مفتاح الجسيمات"><span><i class="protonDot"></i>p⁺ بروتون</span><span><i class="neutronDot"></i>n نيوترون</span><span><i class="electronDot"></i>e⁻ إلكترون</span></div></div>
+    </div>
+    <aside class="side"><section class="controlCard" id="controls"></section><section class="missionCard" id="missions"></section></aside>
+  </section>
+  <p class="footerNote">تجربة تعليمية: السحب الإلكترونية تمثل مناطق الاحتمال، وليست مسارات كلاسيكية ثابتة للإلكترونات.</p>
+</main>
+<div id="teacherPanel" class="modal hidden" role="dialog" aria-modal="true"><div class="modalCard teacherCard"><button id="closeTeacher" class="iconClose" aria-label="إغلاق">×</button><h2 id="teacherTitle">لوحة فتح وإغلاق الدروس</h2><p>هذه اللوحة غير مستخدمة في تجربة المعلمين.</p><div id="teacherLessons" class="teacherLessons"></div><div class="teacherActions"><button id="saveAccessBtn" class="btn">حفظ</button><button id="shareBtn" class="btn primary">نسخ الرابط</button></div><input id="shareLink" class="shareLink hidden" readonly><p id="teacherMessage" class="teacherMessage"></p></div></div>
+<div id="lessonModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modalCard"><button id="closeLesson" class="iconClose" aria-label="إغلاق">×</button><span id="lessonModalUnit" class="eyebrow"></span><h2 id="lessonModalTitle"></h2><p id="lessonModalSummary"></p><h3>Learning targets</h3><ul id="lessonObjectives" class="objectiveList"></ul><div id="lessonStatus" class="status warn"></div></div></div>
+<noscript>يحتاج هذا المختبر إلى تشغيل JavaScript.</noscript>
+<script type="module" src="app.js?v=platform-5"></script>
+<script type="module" src="workshop.js?v=1"></script>
+<script type="module" src="quantum-lab.js?v=6"></script>
+</body>
+</html>

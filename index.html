@@ -1,58 +1,3 @@
->>
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#06111f">
-  <title>منصة مختبر الكيمياء التفاعلي</title>
-  <link rel="stylesheet" href="styles.css?v=platform-1">
-  <link rel="stylesheet" href="portal.css?v=2">
-  <link rel="stylesheet" href="quantum-lab.css?v=2">
-  <script type="importmap">
-  {"imports":{"three":"./vendor/three.module.min.js","three/addons/controls/OrbitControls.js":"./vendor/OrbitControls.js"}}
-  </script>
-</head>
-<body>
-<main class="app">
-  <header class="top">
-    <div class="brand">
-      <div class="brandMark" aria-hidden="true">⚛</div>
-      <div><h1 id="brandTitle">منصة مختبر الكيمياء التفاعلي</h1><p id="brandSub">تجارب ومحاكاة للصفوف 10–12</p></div>
-    </div>
-    <div class="topActions">
-      <button id="platformBtn" class="btn primary">كل الدروس</button>
-      <button id="teacherBtn" class="btn">تحكم المعلم</button>
-      <button id="langBtn" class="btn">English</button>
-      <button id="resetBtn" class="btn danger">إعادة المختبر</button>
-    </div>
-  </header>
-  <section id="catalog" class="catalog"></section>
-  <nav id="tabsNav" class="tabs hidden" aria-label="المختبرات">
-    <button class="tab active" data-lab="atom">ابنِ ذرة</button>
-    <button class="tab" data-lab="ionic">مختبر أيوني</button>
-    <button class="tab" data-lab="covalent">مختبر تساهمي</button>
-    <button class="tab" data-lab="properties">مختبر الخصائص</button>
-    <button class="tab" data-lab="challenge">التحدي</button>
-  </nav>
-  <section id="labSection" class="lab hidden">
-    <div class="viewerCard">
-      <div class="viewerTop"><div class="viewerTitle"><span class="liveDot"></span><span id="sceneTitle">O — الأكسجين</span></div><div id="sceneHint" class="viewerHint">اسحب للتدوير • استخدم العجلة للتقريب</div></div>
-      <div id="scene"><div id="modelNote" class="sceneBadge">مستويات طاقة تعليمية ثلاثية الأبعاد</div><div class="legend" aria-label="مفتاح الجسيمات"><span><i class="protonDot"></i>p⁺ بروتون</span><span><i class="neutronDot"></i>n نيوترون</span><span><i class="electronDot"></i>e⁻ إلكترون</span></div></div>
-    </div>
-    <aside class="side"><section class="controlCard" id="controls"></section><section class="missionCard" id="missions"></section></aside>
-  </section>
-  <p class="footerNote">المحتوى مرتب من ملفات المنهج الرسمية 2026–2027. نموذج الحلقات يوضح مستويات الطاقة، أما الإلكترون الحقيقي فيوصف بسحابة احتمالية.</p>
-</main>
-<div id="teacherPanel" class="modal hidden" role="dialog" aria-modal="true"><div class="modalCard teacherCard"><button id="closeTeacher" class="iconClose" aria-label="إغلاق">×</button><h2 id="teacherTitle">لوحة فتح وإغلاق الدروس</h2><p>اختر الدروس ثم انسخ رابط الطلاب. الرابط يفتح فقط الدروس التي حددتها.</p><div id="teacherLessons" class="teacherLessons"></div><div class="teacherActions"><button id="saveAccessBtn" class="btn">حفظ على هذا الجهاز</button><button id="shareBtn" class="btn primary">نسخ رابط الطلاب</button></div><input id="shareLink" class="shareLink hidden" readonly><p id="teacherMessage" class="teacherMessage"></p></div></div>
-<div id="lessonModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modalCard"><button id="closeLesson" class="iconClose" aria-label="إغلاق">×</button><span id="lessonModalUnit" class="eyebrow"></span><h2 id="lessonModalTitle"></h2><p id="lessonModalSummary"></p><h3>Learning targets</h3><ul id="lessonObjectives" class="objectiveList"></ul><div id="lessonStatus" class="status warn"></div></div></div>
-<noscript>يحتاج هذا المختبر إلى تشغيل JavaScript.</noscript>
-<script type="module" src="app.js?v=platform-5"></script>
-<script type="module" src="portal.js?v=4"></script>
-<script type="module" src="quantum-lab.js?v=6"></script>
-</body>
-</html>
-<<<INDEX>>>
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -65,9 +10,11 @@
     *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 12% 15%,rgba(51,182,255,.22),transparent 28%),radial-gradient(circle at 88% 80%,rgba(137,90,255,.2),transparent 30%),linear-gradient(145deg,#050d18,#081c30 56%,#07111f);overflow-x:hidden}
     body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent)}
     .shell{width:min(1120px,92vw);margin:auto;padding:24px 0 48px;position:relative;z-index:1}.top{display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:13px}.mark{width:52px;height:52px;border:1px solid rgba(85,216,255,.45);border-radius:17px;display:grid;place-items:center;font-size:29px;color:var(--cyan);background:rgba(85,216,255,.08);box-shadow:0 0 32px rgba(85,216,255,.15)}.brand small{color:var(--cyan);letter-spacing:.16em}.brand b{display:block;font-size:clamp(18px,2.3vw,27px);margin-top:3px}.lang{border:1px solid var(--line);background:rgba(255,255,255,.05);color:white;padding:10px 17px;border-radius:13px;cursor:pointer;font-weight:700}
-    .hero{text-align:center;padding:clamp(58px,10vh,110px) 0 38px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:#38efb5;box-shadow:0 0 14px #38efb5}.hero h1{font-size:clamp(36px,7vw,72px);line-height:1.08;margin:16px auto 17px;max-width:900px}.hero h1 span{background:linear-gradient(90deg,var(--cyan),#bcaaff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:720px;margin:auto;color:var(--muted);font-size:clamp(16px,2vw,20px);line-height:1.8}
-    .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:920px;margin:0 auto}.card{position:relative;display:flex;min-height:260px;flex-direction:column;text-decoration:none;color:inherit;padding:31px;border-radius:26px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(18px);box-shadow:0 25px 65px rgba(0,0,0,.28);overflow:hidden;transition:.25s transform,.25s border-color,.25s box-shadow}.card:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;inset:auto -90px -110px auto;background:var(--glow);filter:blur(6px);opacity:.18}.card:hover{transform:translateY(-7px);border-color:var(--accent);box-shadow:0 30px 75px rgba(0,0,0,.35),0 0 30px color-mix(in srgb,var(--accent) 18%,transparent)}.student{--accent:var(--cyan);--glow:var(--cyan)}.teacher{--accent:var(--violet);--glow:var(--violet)}.icon{width:62px;height:62px;display:grid;place-items:center;border-radius:20px;font-size:31px;background:color-mix(in srgb,var(--accent) 13%,transparent);border:1px solid color-mix(in srgb,var(--accent) 38%,transparent)}.card h2{font-size:28px;margin:22px 0 8px}.card p{color:var(--muted);line-height:1.7;margin:0 0 25px}.enter{margin-top:auto;display:flex;align-items:center;justify-content:space-between;color:var(--accent);font-weight:900}.arrow{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--accent) 13%,transparent)}.privacy{text-align:center;color:#7993a4;margin-top:27px;font-size:13px}
-    @media(max-width:720px){.top{align-items:flex-start}.brand small{font-size:10px}.choices{grid-template-columns:1fr}.hero{padding-top:55px}.card{min-height:230px}}
+    .hero{text-align:center;padding:clamp(42px,7vh,78px) 0 28px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:#38efb5;box-shadow:0 0 14px #38efb5}.hero h1{font-size:clamp(36px,7vw,72px);line-height:1.08;margin:16px auto 17px;max-width:900px}.hero h1 span{background:linear-gradient(90deg,var(--cyan),#bcaaff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:720px;margin:auto;color:var(--muted);font-size:clamp(16px,2vw,20px);line-height:1.8}
+    .accessPanel{max-width:920px;margin:0 auto 26px;display:grid;grid-template-columns:170px 1fr;gap:24px;align-items:center;padding:18px 24px;border:1px solid rgba(71,230,161,.3);border-radius:24px;background:linear-gradient(135deg,rgba(9,31,45,.94),rgba(13,37,54,.83));box-shadow:0 22px 60px rgba(0,0,0,.28),0 0 34px rgba(71,230,161,.08)}.qrFrame{width:154px;height:154px;padding:9px;background:#fff;border-radius:18px;display:grid;place-items:center;cursor:zoom-in}.qrFrame svg{display:block;width:100%;height:100%}.accessText{text-align:start}.accessText .live{display:inline-flex;align-items:center;gap:8px;color:#73f0b9;font-weight:900;font-size:12px;letter-spacing:.1em}.accessText .live:before{content:"";width:8px;height:8px;border-radius:50%;background:#47e6a1;box-shadow:0 0 14px #47e6a1}.accessText h2{font-size:clamp(22px,3vw,31px);margin:8px 0 5px}.accessText p{color:var(--muted);margin:0 0 12px}.urlRow{display:flex;gap:9px;align-items:stretch}.siteUrl{direction:ltr;text-align:left;flex:1;display:flex;align-items:center;min-width:0;padding:11px 14px;border:1px solid rgba(85,216,255,.28);border-radius:12px;background:#061523;color:#7ee7ff;font-weight:800;font-size:clamp(12px,1.5vw,16px);overflow-wrap:anywhere}.copyUrl{border:0;border-radius:12px;padding:10px 16px;background:linear-gradient(135deg,#47e6a1,#24c5dc);color:#032019;font-weight:900;cursor:pointer}.copyState{min-height:19px;color:#73f0b9;margin-top:6px;font-size:12px}.qrOverlay{position:fixed;inset:0;z-index:50;background:rgba(2,8,16,.92);display:none;place-items:center;padding:24px;backdrop-filter:blur(14px)}.qrOverlay.show{display:grid}.qrOverlayCard{position:relative;text-align:center;width:min(530px,95vw);padding:30px;border-radius:28px;background:#0a1b2e;border:1px solid rgba(71,230,161,.35)}.qrOverlayCard .qrFrame{width:min(360px,72vw);height:min(360px,72vw);margin:0 auto 18px;cursor:default}.qrOverlayCard h2{margin:0 0 7px}.qrOverlayCard .siteUrl{justify-content:center}.closeQr{position:absolute;top:12px;inset-inline-end:12px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#10263e;color:#fff;font-size:25px;cursor:pointer}
+    .choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;max-width:1120px;margin:0 auto}.card{position:relative;display:flex;min-height:280px;flex-direction:column;text-decoration:none;color:inherit;padding:28px;border-radius:26px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(18px);box-shadow:0 25px 65px rgba(0,0,0,.28);overflow:hidden;transition:.25s transform,.25s border-color,.25s box-shadow}.card:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;inset:auto -90px -110px auto;background:var(--glow);filter:blur(6px);opacity:.18}.card:hover{transform:translateY(-7px);border-color:var(--accent);box-shadow:0 30px 75px rgba(0,0,0,.35),0 0 30px color-mix(in srgb,var(--accent) 18%,transparent)}.student{--accent:var(--cyan);--glow:var(--cyan)}.workshop{--accent:#47e6a1;--glow:#47e6a1}.teacher{--accent:var(--violet);--glow:var(--violet)}.icon{width:62px;height:62px;display:grid;place-items:center;border-radius:20px;font-size:31px;background:color-mix(in srgb,var(--accent) 13%,transparent);border:1px solid color-mix(in srgb,var(--accent) 38%,transparent)}.card h2{font-size:26px;margin:22px 0 8px}.card p{color:var(--muted);line-height:1.7;margin:0 0 25px}.enter{margin-top:auto;display:flex;align-items:center;justify-content:space-between;color:var(--accent);font-weight:900}.arrow{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--accent) 13%,transparent)}.privacy{text-align:center;color:#7993a4;margin-top:27px;font-size:13px}
+    @media(max-width:920px){.choices{grid-template-columns:1fr 1fr}.teacher{grid-column:1/-1}}
+    @media(max-width:720px){.top{align-items:flex-start}.brand small{font-size:10px}.choices{grid-template-columns:1fr}.teacher{grid-column:auto}.hero{padding-top:45px}.card{min-height:230px}.accessPanel{grid-template-columns:1fr;text-align:center}.qrFrame{margin:auto}.accessText{text-align:center}.urlRow{flex-direction:column}.siteUrl{justify-content:center;text-align:center}.copyUrl{min-height:45px}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.card{transition:none}}
   </style>
 </head>
@@ -82,6 +29,16 @@
       <h1 data-ar="اختر طريقة الدخول إلى <span>مختبر الكيمياء</span>" data-en="Choose how to enter the <span>Chemistry Lab</span>">اختر طريقة الدخول إلى <span>مختبر الكيمياء</span></h1>
       <p data-ar="منصة واحدة تجمع تجارب الطلاب التفاعلية ولوحة تحكم المعلم، مع فصل آمن بين الواجهتين." data-en="One platform for hands-on student experiments and teacher controls, with secure separation between both areas.">منصة واحدة تجمع تجارب الطلاب التفاعلية ولوحة تحكم المعلم، مع فصل آمن بين الواجهتين.</p>
     </section>
+    <section class="accessPanel" aria-labelledby="accessTitle">
+      <div id="qrFrame" class="qrFrame" role="button" tabindex="0" aria-label="تكبير رمز QR"></div>
+      <div class="accessText">
+        <span class="live" data-ar="جاهز للدخول الآن" data-en="READY TO JOIN">جاهز للدخول الآن</span>
+        <h2 id="accessTitle" data-ar="دخول المعلمين من الهاتف" data-en="Teachers: join from your phone">دخول المعلمين من الهاتف</h2>
+        <p data-ar="امسح رمز QR بالكاميرا، أو اكتب عنوان الموقع الظاهر أدناه." data-en="Scan the QR code with your camera, or type the website address below.">امسح رمز QR بالكاميرا، أو اكتب عنوان الموقع الظاهر أدناه.</p>
+        <div class="urlRow"><a id="siteUrl" class="siteUrl" href="teachers.html?open=g10-covalent">جارٍ تجهيز الرابط…</a><button id="copyUrl" class="copyUrl" type="button" data-ar="نسخ الرابط" data-en="Copy link">نسخ الرابط</button></div>
+        <div id="copyState" class="copyState" role="status"></div>
+      </div>
+    </section>
     <section class="choices" aria-label="اختيار نوع الدخول">
       <a class="card student" href="student.html">
         <div class="icon">🧪</div>
@@ -89,15 +46,25 @@
         <p data-ar="الدخول برقم ESE، تنفيذ التجارب ثلاثية الأبعاد، واستكمال الدروس والاختبارات." data-en="Sign in with an ESE number, explore 3D experiments, and complete lessons and quizzes.">الدخول برقم ESE، تنفيذ التجارب ثلاثية الأبعاد، واستكمال الدروس والاختبارات.</p>
         <span class="enter"><span data-ar="دخول الطلاب" data-en="Student sign in">دخول الطلاب</span><span class="arrow">←</span></span>
       </a>
+      <a class="card workshop" href="teachers.html?open=g10-covalent">
+        <div class="icon">🧑‍🏫</div>
+        <h2 data-ar="للمعلمين" data-en="For Teachers">للمعلمين</h2>
+        <p data-ar="سجّل اسمك ثم جرّب درس الرابطة التساهمية ثلاثي الأبعاد وتفاعل معه مباشرة." data-en="Enter your name, then explore the hands-on 3D covalent-bond lesson.">سجّل اسمك ثم جرّب درس الرابطة التساهمية ثلاثي الأبعاد وتفاعل معه مباشرة.</p>
+        <span class="enter"><span data-ar="تسجيل الحضور والتجربة" data-en="Join the workshop">تسجيل الحضور والتجربة</span><span class="arrow">←</span></span>
+      </a>
       <a class="card teacher" href="teacher.html">
         <div class="icon">🔐</div>
-        <h2 data-ar="واجهة المعلم" data-en="Teacher Dashboard">واجهة المعلم</h2>
-        <p data-ar="فتح وإغلاق الدروس، متابعة مشاركة الطلاب، مشاهدة النتائج وتصدير التقارير." data-en="Open and lock lessons, monitor participation, review results, and export reports.">فتح وإغلاق الدروس، متابعة مشاركة الطلاب، مشاهدة النتائج وتصدير التقارير.</p>
-        <span class="enter"><span data-ar="دخول المعلم" data-en="Teacher sign in">دخول المعلم</span><span class="arrow">←</span></span>
+        <h2 data-ar="لوحة الإدارة" data-en="Admin Dashboard">لوحة الإدارة</h2>
+        <p data-ar="خاصة بك: متابعة حضور المعلمين والطلاب، وإدارة الدروس والنتائج." data-en="Private admin area for teacher attendance, students, lessons, and results.">خاصة بك: متابعة حضور المعلمين والطلاب، وإدارة الدروس والنتائج.</p>
+        <span class="enter"><span data-ar="دخول الإدارة" data-en="Admin sign in">دخول الإدارة</span><span class="arrow">←</span></span>
       </a>
     </section>
     <p class="privacy" data-ar="بيانات الطلاب لا تظهر في واجهة الطالب، ولوحة المعلم محمية برمز دخول." data-en="Student data stays hidden from the student portal, and the teacher dashboard is access-protected.">بيانات الطلاب لا تظهر في واجهة الطالب، ولوحة المعلم محمية برمز دخول.</p>
   </main>
+  <div id="qrOverlay" class="qrOverlay" role="dialog" aria-modal="true" aria-labelledby="qrOverlayTitle">
+    <section class="qrOverlayCard"><button id="closeQr" class="closeQr" type="button" aria-label="إغلاق">×</button><div id="qrLarge" class="qrFrame"></div><h2 id="qrOverlayTitle" data-ar="امسح للدخول إلى تجربة المعلمين" data-en="Scan to join the teacher workshop">امسح للدخول إلى تجربة المعلمين</h2><a id="siteUrlLarge" class="siteUrl" href="teachers.html?open=g10-covalent"></a></section>
+  </div>
+  <script src="vendor/qrcode.js?v=2.0.4"></script>
   <script>
     let lang=localStorage.getItem('chem-entry-language')||'ar';
     const button=document.getElementById('langBtn');
@@ -108,6 +75,18 @@
       document.querySelectorAll('.arrow').forEach(el=>el.textContent=lang==='ar'?'←':'→');
     }
     button.addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';localStorage.setItem('chem-entry-language',lang);applyLanguage()});
+    const qrFrame=document.getElementById('qrFrame'),qrLarge=document.getElementById('qrLarge'),siteUrl=document.getElementById('siteUrl'),siteUrlLarge=document.getElementById('siteUrlLarge'),qrOverlay=document.getElementById('qrOverlay');
+    let workshopUrl=new URL('teachers.html?open=g10-covalent',location.href).href;
+    function renderAccessUrl(value){
+      workshopUrl=value;siteUrl.textContent=value;siteUrl.href=value;siteUrlLarge.textContent=value;siteUrlLarge.href=value;
+      const qr=qrcode(0,'M');qr.addData(value);qr.make();
+      qrFrame.innerHTML=qr.createSvgTag({cellSize:5,margin:2,scalable:true});
+      qrLarge.innerHTML=qr.createSvgTag({cellSize:8,margin:3,scalable:true});
+    }
+    fetch('/api/info',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(info=>renderAccessUrl(info.workshopUrl)).catch(()=>renderAccessUrl(workshopUrl));
+    document.getElementById('copyUrl').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(workshopUrl);document.getElementById('copyState').textContent=lang==='ar'?'تم نسخ الرابط ✓':'Link copied ✓'}catch(e){document.getElementById('copyState').textContent=lang==='ar'?'اضغط مطولًا على الرابط لنسخه.':'Press and hold the link to copy it.'}});
+    function showQr(){qrOverlay.classList.add('show')}function hideQr(){qrOverlay.classList.remove('show')}
+    qrFrame.addEventListener('click',showQr);qrFrame.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showQr()}});document.getElementById('closeQr').addEventListener('click',hideQr);qrOverlay.addEventListener('click',e=>{if(e.target===qrOverlay)hideQr()});document.addEventListener('keydown',e=>{if(e.key==='Escape')hideQr()});
     applyLanguage();
   </script>
 </body>

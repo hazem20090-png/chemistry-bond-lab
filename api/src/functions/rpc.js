@@ -8,7 +8,14 @@ const ALLOWED_RPC = new Set([
   'record_progress',
   'teacher_login',
   'teacher_dashboard',
-  'teacher_set_lesson_access'
+  'teacher_set_lesson_access',
+  'teacher_workshop_dashboard',
+  'teacher_set_workshop_roster',
+  'teacher_award_workshop_star',
+  'teacher_award_star',
+  'workshop_teacher_join',
+  'workshop_teacher_portal',
+  'workshop_record_progress'
 ]);
 
 app.http('chemistryRpc', {

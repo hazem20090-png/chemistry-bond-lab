@@ -23,12 +23,13 @@ overlay.innerHTML=`
   </section>`;
 document.body.appendChild(overlay);
 
-const USE_AZURE_PROXY=location.hostname.endsWith('.azurestaticapps.net');
+const USE_AZURE_PROXY=location.hostname.endsWith('.azurestaticapps.net')||location.hostname==='localhost'||location.hostname==='127.0.0.1'||/^\d+\.\d+\.\d+\.\d+$/.test(location.hostname);
+function asciiJson(value){return JSON.stringify(value).replace(/[\u007f-\uffff]/g,ch=>'\\u'+ch.charCodeAt(0).toString(16).padStart(4,'0'))}
 async function rpc(name,payload){
   const response=await fetch(USE_AZURE_PROXY?`/api/rpc/${encodeURIComponent(name)}`:`${SUPABASE_URL}/rest/v1/rpc/${name}`,{
     method:'POST',
     headers:USE_AZURE_PROXY?{'Content-Type':'application/json'}:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
-    body:JSON.stringify(payload),
+    body:asciiJson(payload),
     cache:'no-store'
   });
   if(!response.ok)throw new Error('network');
@@ -75,6 +76,13 @@ function activatePortal(data,token){
     localStorage.removeItem(TOKEN_KEY);
     const url=new URL(location.href);url.searchParams.delete('open');location.replace(url.toString());
   };
+  const rewardCount=Number(data.rewardCount)||0,lastReward=Number(localStorage.getItem('chem-last-reward-'+data.student.id)||0);
+  const rewardBadge=document.createElement('span');rewardBadge.className='studentRewardBadge';rewardBadge.textContent='⭐ '+rewardCount;chip.querySelector('span').appendChild(rewardBadge);
+  if(rewardCount>lastReward){
+    const celebration=document.createElement('div');celebration.className='rewardCelebration';celebration.innerHTML=`<section><div class="bigStar">⭐</div><h2>أحسنت يا ${escapeHtml(data.student.name)}!</h2><p>أرسل لك المعلم نجمة مكافأة جديدة لإكمالك الدرس.</p><b>${rewardCount} ⭐</b><button type="button">شكراً</button></section>`;document.body.appendChild(celebration);celebration.querySelector('button').onclick=()=>celebration.remove();
+  }
+  localStorage.setItem('chem-last-reward-'+data.student.id,String(rewardCount));
+  setInterval(async()=>{try{const fresh=await rpc('student_portal',{p_token:token});if(!fresh.ok)return;const count=Number(fresh.rewardCount)||0,seen=Number(localStorage.getItem('chem-last-reward-'+data.student.id)||0);rewardBadge.textContent='⭐ '+count;if(count>seen){const celebration=document.createElement('div');celebration.className='rewardCelebration';celebration.innerHTML=`<section><div class="bigStar">⭐</div><h2>أحسنت يا ${escapeHtml(data.student.name)}!</h2><p>أرسل لك المعلم نجمة مكافأة جديدة لإكمالك الدرس.</p><b>${count} ⭐</b><button type="button">شكراً</button></section>`;document.body.appendChild(celebration);celebration.querySelector('button').onclick=()=>celebration.remove()}localStorage.setItem('chem-last-reward-'+data.student.id,String(count))}catch(e){}},30000+Math.floor(Math.random()*15000));
   document.getElementById('catalog')?.addEventListener('click',event=>{
     const card=event.target.closest('[data-lesson]');
     if(card&&card.classList.contains('open'))recordStart(token,card.dataset.lesson);
@@ -113,7 +121,7 @@ async function login(){
     button.disabled=false;
   }
 }
-window.addEventListener('chem:quiz-complete',event=>{const d=event.detail||{};if(d.lessonId)rpc('record_progress',{p_token:localStorage.getItem(TOKEN_KEY),p_lesson_id:d.lessonId,p_status:'completed',p_score:Number(d.score)||0,p_max_score:Number(d.maxScore)||3,p_time_spent_seconds:0}).catch(()=>{});});
+window.addEventListener('chem:quiz-complete',event=>{const d=event.detail||{};if(d.lessonId)rpc('record_progress',{p_token:localStorage.getItem(TOKEN_KEY),p_lesson_id:d.lessonId,p_status:'completed',p_score:Number(d.score)||0,p_max_score:Number(d.maxScore)||3,p_time_spent_seconds:Number(d.timeSpentSeconds)||0,p_answers:Array.isArray(d.answers)?d.answers:[]}).catch(()=>{});});
 document.getElementById('eseLoginBtn').onclick=login;
 document.getElementById('eseLogin').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
 resume();

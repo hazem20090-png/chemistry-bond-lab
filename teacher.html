@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#07111f">
   <title>لوحة المعلم | مختبر الكيمياء</title>
   <link rel="stylesheet" href="teacher.css?v=1">
+  <link rel="stylesheet" href="teacher-v8.css?v=1">
+  <link rel="stylesheet" href="teacher-workshop.css?v=1">
 </head>
 <body>
   <div class="orb orbA"></div><div class="orb orbB"></div>
@@ -43,11 +45,13 @@
         <article><span class="statIcon violet">✓</span><div><b id="activeCount">—</b><small data-ar="دخلوا المنصة" data-en="Joined platform">دخلوا المنصة</small></div></article>
         <article><span class="statIcon amber">🔓</span><div><b id="openCount">—</b><small data-ar="دروس مفتوحة" data-en="Open lessons">دروس مفتوحة</small></div></article>
         <article><span class="statIcon green">◈</span><div><b id="progressCount">—</b><small data-ar="سجلات التقدم" data-en="Progress records">سجلات التقدم</small></div></article>
+        <article><span class="statIcon cyan">🧑‍🏫</span><div><b id="workshopCount">—</b><small data-ar="حضور المعلمين" data-en="Teacher attendance">حضور المعلمين</small></div></article>
       </div>
 
       <nav class="tabs">
         <button class="tab active" data-view="lessons" data-ar="إدارة الدروس" data-en="Lesson access">إدارة الدروس</button>
         <button class="tab" data-view="students" data-ar="الطلاب والنتائج" data-en="Students & results">الطلاب والنتائج</button>
+        <button class="tab" data-view="workshop" data-ar="حضور المعلمين" data-en="Teacher attendance">حضور المعلمين</button>
       </nav>
 
       <section id="lessonsView" class="panel">
@@ -60,13 +64,56 @@
           <div><h3 data-ar="متابعة الطلاب" data-en="Student tracking">متابعة الطلاب</h3><p data-ar="الأسماء، الصف، آخر دخول، التقدم والنتائج." data-en="Names, class, last visit, progress, and results.">الأسماء، الصف، آخر دخول، التقدم والنتائج.</p></div>
           <button id="exportBtn" class="ghost" data-ar="تصدير CSV" data-en="Export CSV">تصدير CSV</button>
         </div>
+        <div class="performanceLegend" aria-label="Performance colors">
+          <span class="legendItem strong">● مكتمل / Completed</span>
+          <span class="legendItem medium">● متوسط / Average</span>
+          <span class="legendItem weak">● ضعيف / Needs support</span>
+        </div>
         <div class="filters"><input id="studentSearch" type="search" placeholder="ابحث بالاسم..."><select id="classFilter"><option value="">كل الصفوف</option></select></div>
         <div class="tableWrap"><table><thead><tr><th data-ar="الطالب" data-en="Student">الطالب</th><th data-ar="الصف" data-en="Class">الصف</th><th data-ar="آخر دخول" data-en="Last visit">آخر دخول</th><th data-ar="الدروس" data-en="Lessons">الدروس</th><th data-ar="آخر نتيجة" data-en="Latest score">آخر نتيجة</th></tr></thead><tbody id="studentRows"></tbody></table></div>
         <div id="emptyState" class="empty hidden" data-ar="لا توجد نتائج مطابقة." data-en="No matching students.">لا توجد نتائج مطابقة.</div>
       </section>
+
+      <section id="workshopView" class="panel hidden">
+        <div class="panelHead">
+          <div><h3 data-ar="تجربة المعلمين" data-en="Teacher workshop">تجربة المعلمين</h3><p data-ar="تابع من سجّل حضوره ومن لم يدخل، ثم شارك رابط التجربة." data-en="See who joined, who has not joined, and share the workshop link.">تابع من سجّل حضوره ومن لم يدخل، ثم شارك رابط التجربة.</p></div>
+          <button id="copyWorkshopLink" class="primary" data-ar="نسخ رابط المعلمين" data-en="Copy teacher link">نسخ رابط المعلمين</button>
+        </div>
+        <div class="workshopSummary">
+          <span><b id="workshopJoined">0</b><small data-ar="دخلوا" data-en="Joined">دخلوا</small></span>
+          <span><b id="workshopMissing">0</b><small data-ar="لم يدخلوا" data-en="Not joined">لم يدخلوا</small></span>
+          <span><b id="workshopGuests">0</b><small data-ar="أسماء إضافية" data-en="Additional names">أسماء إضافية</small></span>
+        </div>
+        <div class="rosterEditor">
+          <label for="workshopRoster" data-ar="قائمة المعلمين المتوقعة — اسم واحد في كل سطر" data-en="Expected teacher list — one name per line">قائمة المعلمين المتوقعة — اسم واحد في كل سطر</label>
+          <textarea id="workshopRoster" rows="7" placeholder="مثال:&#10;أحمد محمد&#10;فاطمة علي"></textarea>
+          <div class="rosterActions"><button id="saveWorkshopRoster" class="primary" data-ar="حفظ القائمة" data-en="Save list">حفظ القائمة</button><small data-ar="يمكنك تركها فارغة إذا أردت متابعة من دخل فقط." data-en="Leave it empty if you only need to see who joined.">يمكنك تركها فارغة إذا أردت متابعة من دخل فقط.</small></div>
+        </div>
+        <div class="tableWrap"><table class="workshopTable"><thead><tr><th data-ar="المعلم" data-en="Teacher">المعلم</th><th data-ar="الحالة" data-en="Status">الحالة</th><th data-ar="أول دخول" data-en="First joined">أول دخول</th><th data-ar="آخر دخول" data-en="Last visit">آخر دخول</th><th data-ar="مرات الدخول" data-en="Visits">مرات الدخول</th></tr></thead><tbody id="workshopRows"></tbody></table></div>
+        <div id="workshopEmpty" class="empty hidden" data-ar="لم يُسجّل أي معلم حضوره بعد." data-en="No teacher has joined yet.">لم يُسجّل أي معلم حضوره بعد.</div>
+      </section>
     </section>
   </main>
+  <div id="studentDetail" class="detailOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="detailName">
+    <section class="detailCard">
+      <button id="closeDetail" class="detailClose" aria-label="Close">×</button>
+      <div class="detailHead"><div><span class="eyebrow">STUDENT LEARNING RECORD</span><h2 id="detailName"></h2><p id="detailMeta"></p></div><div id="detailStars" class="starTotal"></div></div>
+      <div id="detailPerformance" class="performanceSummary"></div>
+      <div id="detailLessons" class="detailLessons"></div>
+      <div id="rewardHistory" class="rewardHistory"></div>
+    </section>
+  </div>
+  <div id="workshopDetail" class="detailOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="workshopDetailName">
+    <section class="detailCard">
+      <button id="closeWorkshopDetail" class="detailClose" aria-label="Close">×</button>
+      <div class="detailHead"><div><span class="eyebrow">TEACHER WORKSHOP RECORD</span><h2 id="workshopDetailName"></h2><p id="workshopDetailMeta"></p></div><div id="workshopDetailStars" class="starTotal"></div></div>
+      <div id="workshopDetailPerformance" class="performanceSummary"></div>
+      <div id="workshopDetailLessons" class="detailLessons"></div>
+      <div class="workshopRewardAction"><button id="awardWorkshopStar" class="awardBtn">⭐ إرسال نجمة تقدير</button></div>
+      <div id="workshopRewardHistory" class="rewardHistory"></div>
+    </section>
+  </div>
   <div id="toast" class="toast"></div>
-  <script type="module" src="teacher.js?v=3"></script>
+  <script type="module" src="teacher.js?v=9"></script>
 </body>
 </html>

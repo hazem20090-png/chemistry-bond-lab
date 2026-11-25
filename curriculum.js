@@ -22,6 +22,8 @@ export const curriculum=[
 {grade:12,stream:'GEN',unit:'U2M9',id:'g12-compound-moles',title:{ar:'مولات المركبات',en:'Moles of Compounds'},weeks:'7–10',summary:{ar:'احسب مولات الذرات والأيونات والكتلة المولية للمركبات.',en:'Calculate moles of atoms and ions and molar mass of compounds.'},objectives:['Chemical subscripts','Compound molar mass','Mass ↔ particles'],kind:'practice',defaultOpen:true},
 {grade:12,stream:'GEN',unit:'U2M9',id:'g12-mole-lab',title:{ar:'تجربة: تقدير حجم المول',en:'Lab: Estimating the Size of a Mole'},weeks:'Term 1',summary:{ar:'تجربة موصى بها في دليل مختبرات أبوظبي باستخدام الميزان والبازلاء المجففة.',en:'An Abu Dhabi laboratory-guide activity using a balance and split peas.'},objectives:['Measurement','Estimation','Mole scale'],kind:'lab',defaultOpen:false}
 ];
+const metallicLesson=curriculum.find(x=>x.id==='g10-metallic');
+if(metallicLesson){metallicLesson.kind='metallic';metallicLesson.title.ar='الرابطة الفلزية وخواص الفلزات';metallicLesson.summary.ar='حرّك الإلكترونات غير المتمركزة، طبّق فرق جهد، وشوّه الشبكة لتكتشف التوصيل وقابلية الطرق والسحب.';metallicLesson.summary.en='Move delocalized electrons, apply voltage, and deform the lattice to investigate conductivity, malleability, and ductility.';metallicLesson.objectives=['Delocalized valence electrons','Electrical and thermal conductivity','Malleability and ductility']}
 export const gradeMeta={
   10:{ar:'الصف العاشر المتقدم',en:'Grade 10 Advanced',color:'#26dcff'},
   11:{ar:'الصف الحادي عشر المتقدم',en:'Grade 11 Advanced',color:'#8d6cff'},
